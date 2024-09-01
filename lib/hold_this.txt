@@ -1,0 +1,340 @@
+workout_generator_home.dart
+import 'package:flutter/material.dart';
+import 'package:workout_generator/utils/workout_generator.dart';
+
+import '../constants/app_constants.dart';
+import '../models/exercise.dart';
+
+class WorkoutGeneratorHome extends StatefulWidget {
+  const WorkoutGeneratorHome({super.key});
+
+  @override
+  _WorkoutGeneratorHomeState createState() => _WorkoutGeneratorHomeState();
+}
+
+class _WorkoutGeneratorHomeState extends State<WorkoutGeneratorHome> {
+  List<Exercise> generatedWorkout = [];
+  String selectedDuration = '30 mins or less';
+  int selectedDaysPerWeek = 3;
+  String selectedGoal = 'Strength'; // Default selection for workout goal
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Workout Generator'),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('Select your workout goal:',
+                  style: TextStyle(fontSize: 18)),
+              DropdownButton<String>(
+                value: selectedGoal,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedGoal = newValue!;
+                  });
+                },
+                items:
+                    workoutGoals.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Select your equipment option:',
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final workout = generateWorkout('Home Gym');
+                  print('Generated workout for Home Gym: $workout');
+                  setState(() {
+                    generatedWorkout = workout;
+                  });
+                },
+                child: const Text('Home Gym'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final workout = generateWorkout('Pro Gym');
+                  print('Generated workout for Professional Gym: $workout');
+                  setState(() {
+                    generatedWorkout = workout;
+                  });
+                },
+                child: const Text('Professional Gym'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final workout = generateWorkout('Bodyweight');
+                  print('Generated workout for No Equipment: $workout');
+                  setState(() {
+                    generatedWorkout = workout;
+                  });
+                },
+                child: const Text('No Equipment'),
+              ),
+              const SizedBox(height: 30),
+              const Text(
+                'Select workout duration and days per week:',
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              const Text('Workout Duration:', style: TextStyle(fontSize: 18)),
+              DropdownButton<String>(
+                value: selectedDuration,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedDuration = newValue!;
+                  });
+                },
+                items: workoutDurations // Use the constant list
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              const Text('Days per Week:', style: TextStyle(fontSize: 18)),
+              DropdownButton<int>(
+                value: selectedDaysPerWeek,
+                onChanged: (int? newValue) {
+                  setState(() {
+                    selectedDaysPerWeek = newValue!;
+                  });
+                },
+                items: daysPerWeekOptions // Use the constant list
+                    .map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+              ),
+
+              // Display the generated workout
+              if (generatedWorkout.isEmpty)
+                const Text(
+                    'No workout generated. Please try a different option.')
+              else
+                Column(
+                  children: _buildWorkoutDisplay(generatedWorkout),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper function to build the workout display
+  List<Widget> _buildWorkoutDisplay(List<Exercise> workout) {
+    List<Widget> displayWidgets = [];
+
+    // Find and display the 'Primary' exercise first
+    final primaryExercise =
+        workout.firstWhere((exercise) => exercise.position.contains('Primary'));
+    displayWidgets.add(Text(primaryExercise.name));
+
+    // Process the remaining exercises, handling advanced sets
+    for (int i = 1; i < workout.length; i++) {
+      final exercise = workout[i];
+      print(
+          'Processing exercise: ${exercise.name} with positions: ${exercise.position} isAdvanced: ${exercise.isAdvanced}');
+
+      if (exercise.position.contains('Finisher')) {
+        // Always display the 'Finisher' exercise at the end
+        displayWidgets.add(Text(exercise.name));
+      } else if (exercise.isAdvanced) {
+        // Skip exercises that are part of an advanced set (already displayed)
+        continue;
+      } else if (i < workout.length - 1 &&
+          exercise.position.contains('Secondary') &&
+          workout[i + 1].position.contains('Secondary') &&
+          !workout[i + 1].isAdvanced) {
+        // Display advanced set with Wrap for flexible layout
+        displayWidgets.add(
+          Wrap(
+            children: [
+              Text(exercise.name),
+              const Text(' - '),
+              Text(workout[i + 1].name),
+            ],
+          ),
+        );
+        i++;
+      } else {
+        // Display other 'Secondary' exercises individually
+        displayWidgets.add(Text(exercise.name));
+      }
+    }
+
+    // Ensure we have enough lines for visual consistency, but display blank lines instead of placeholders
+    while (displayWidgets.length < 10) {
+      displayWidgets.add(
+          const SizedBox(height: 20)); // Add empty space for visual separation
+    }
+
+    return displayWidgets;
+  }
+}
+
+workout_generator.dart
+import 'dart:math';
+
+import 'package:workout_generator/data/exercise_data.dart';
+import 'package:workout_generator/models/exercise.dart';
+
+List<Exercise> generateWorkout(String setting, {bool includeAdvanced = false}) {
+  final filteredExercises = exercises
+      .where((exercise) => exercise.settings.contains(setting))
+      .toList();
+
+  filteredExercises.shuffle(Random());
+
+  List<Exercise> workout = [];
+  List<Exercise> selectedExercises = [];
+
+  // 1. Select primary exercise
+  final primaryExercises = filteredExercises
+      .where((exercise) => exercise.position.contains('Primary'))
+      .toList();
+  if (primaryExercises.isNotEmpty) {
+    final primaryExercise = primaryExercises.first;
+    workout.add(primaryExercise.copyWith());
+    selectedExercises.add(primaryExercise);
+  } else {
+    // Handle case where no primary exercise is found for the setting
+    return [];
+  }
+
+  print('Primary exercise selected: ${workout[0].name}');
+
+  if (includeAdvanced && Random().nextDouble() < 0.25) {
+    // 25% chance of advanced structure
+
+    // Weighted random selection for advanced type
+    final randomValue = Random().nextDouble();
+    final advancedType = randomValue < 0.5 ? 0 : (randomValue < 0.8 ? 1 : 2);
+
+    if (advancedType == 0) {
+      // Superset
+      workout.addAll(filteredExercises
+          .where((exercise) =>
+              exercise.position.contains('Secondary') &&
+              !selectedExercises.contains(exercise))
+          .take(2)
+          .map((exercise) => exercise.copyWith())
+          .toList());
+      print('Superset added: ${workout[1].name} - ${workout[2].name}');
+    } else if (advancedType == 1) {
+      // Compound Set
+      final targetCategory =
+          filteredExercises[Random().nextInt(filteredExercises.length)]
+              .categories
+              .first;
+      workout.addAll(filteredExercises
+          .where((exercise) =>
+              exercise.categories.contains(targetCategory) &&
+              exercise.position.contains('Secondary') &&
+              !selectedExercises.contains(exercise))
+          .take(2)
+          .map((exercise) => exercise.copyWith())
+          .toList());
+      print('Compound set added: ${workout[1].name} - ${workout[2].name}');
+    } else {
+      // Mini-Circuit
+      var circuitExercises = filteredExercises
+          .where((exercise) =>
+              exercise.position.contains('Secondary') &&
+              !selectedExercises.contains(exercise))
+          .take(Random().nextInt(2) + 3)
+          .map((exercise) => exercise.copyWith())
+          .toList();
+
+      // Ensure no duplicates within the mini-circuit
+      circuitExercises = circuitExercises.toSet().toList();
+
+      workout.addAll(circuitExercises);
+      String miniCircuitExercises =
+          circuitExercises.map((e) => e.name).join(' - ');
+      print('Mini-circuit added: $miniCircuitExercises');
+    }
+
+    // Mark all exercises in the advanced structure as 'isAdvanced = true' on their copies
+    for (int i = 1; i < workout.length; i++) {
+      workout[i] = workout[i].copyWith(isAdvanced: true);
+    }
+
+    selectedExercises.addAll(workout.sublist(1));
+  }
+
+  // 2. Fill remaining secondary exercise slots
+  int maxExercises = 10;
+  while (workout.length < maxExercises) {
+    final nextSecondary = filteredExercises.firstWhere(
+      (exercise) =>
+          exercise.position.contains('Secondary') &&
+          !exercise.finisherOnly &&
+          !selectedExercises.contains(exercise),
+      orElse: () => Exercise(
+        name: 'Rest or exercise of your choice',
+        categories: [],
+        settings: [],
+        equipment: [],
+        position: ['Secondary'],
+      ),
+    );
+
+    workout.add(nextSecondary.copyWith());
+    selectedExercises.add(nextSecondary);
+  }
+
+  // 3. Select a finisher exercise if there's space
+  if (workout.length < maxExercises) {
+    final finisherExercises = filteredExercises
+        .where((exercise) =>
+            (exercise.position.contains('Finisher') || exercise.finisherOnly) &&
+            !selectedExercises.contains(exercise))
+        .toList();
+    if (finisherExercises.isNotEmpty) {
+      workout.add(finisherExercises.first.copyWith());
+    } else {
+      // If no unique finisher is found, try finding a secondary exercise that's not already in the workout
+      final alternativeFinishers = filteredExercises
+          .where((exercise) =>
+              exercise.position.contains('Secondary') &&
+              !selectedExercises.contains(exercise))
+          .toList();
+      if (alternativeFinishers.isNotEmpty) {
+        workout.add(alternativeFinishers.first.copyWith());
+      } else {
+        // If no suitable finisher or secondary exercise is found, add a placeholder
+        workout.add(Exercise(
+          name: 'Rest or exercise of your choice',
+          categories: [],
+          settings: [],
+          equipment: [],
+          position: ['Finisher'],
+        ));
+      }
+    }
+
+    print('Finisher exercise added: ${workout.last.name}');
+  }
+
+  // Additional print statement for debugging
+  print('Final workout: $workout');
+
+  return workout;
+}
