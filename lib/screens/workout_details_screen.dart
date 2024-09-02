@@ -59,7 +59,7 @@ class WorkoutDetailsScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const GoalSelectionScreen()),
-                    (route) => false,
+                        (route) => false,
                   );
                 },
                 child: const Text('Rebuild'),
@@ -81,15 +81,15 @@ class WorkoutDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Helper function to build the workout display
+// Helper function to build the workout display
   List<Widget> _buildWorkoutDisplay(
       BuildContext context, List<Exercise> workout) {
     List<Widget> displayWidgets = [];
-    int advancedSetCount = 0;
+    int advancedSetCount = 0; // Keep track of advanced set count
 
     // Find and display the 'Primary' exercise first, handling the case where it might not exist
     final primaryExercise = workout.firstWhere(
-      (exercise) => exercise.position.contains('Primary'),
+          (exercise) => exercise.position.contains('Primary'),
       orElse: () => Exercise(
         name: 'No primary exercise found',
         categories: [],
@@ -103,18 +103,21 @@ class WorkoutDetailsScreen extends StatelessWidget {
       SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: const BorderSide(color: Colors.blue, width: 2.0),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(primaryExercise.name,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 Text('Category: ${primaryExercise.categories.join(', ')}'),
                 Text('Equipment: ${primaryExercise.equipment.join(', ')}'),
                 if (primaryExercise.description != null)
                   Text('Description: ${primaryExercise.description}'),
-                // You might want to adjust the sets and reps display based on whether a primary exercise was actually found
                 const Text('Sets: 3, Reps: 10'),
               ],
             ),
@@ -126,8 +129,11 @@ class WorkoutDetailsScreen extends StatelessWidget {
     // Process the remaining exercises
     for (int i = 1; i < workout.length; i++) {
       final exercise = workout[i];
-      print(
-          'Processing exercise: ${exercise.name} with positions: ${exercise.position} isAdvanced: ${exercise.isAdvanced}');
+
+      // Reset advancedSetCount only if the previous exercise was NOT part of an advanced set
+      if (i > 0 && !workout[i - 1].isAdvancedSet) {
+        advancedSetCount = 0;
+      }
 
       if (exercise.position.contains('Finisher')) {
         // Always display the 'Finisher' exercise at the end
@@ -135,13 +141,17 @@ class WorkoutDetailsScreen extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: const BorderSide(color: Colors.blue, width: 2.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(exercise.name,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     Text('Category: ${exercise.categories.join(', ')}'),
                     Text('Equipment: ${exercise.equipment.join(', ')}'),
                     if (exercise.description != null)
@@ -153,17 +163,35 @@ class WorkoutDetailsScreen extends StatelessWidget {
             ),
           ),
         );
-      } else if (exercise.isAdvanced) {
-        if (i > 0 && !workout[i - 1].isAdvanced) {
-          // Start of an advanced set
+      } else if (exercise.isAdvancedSet) {
+        // Only increment advancedSetCount if this is the start of a new advanced set
+        if (i == 0 || !workout[i - 1].isAdvancedSet) {
           advancedSetCount++;
         }
 
-        // Display each exercise in the advanced set individually with an icon
+        // Determine border color based on advanced set count
+        Color borderColor;
+        if (advancedSetCount == 1) {
+          borderColor = Colors.green;
+        } else if (advancedSetCount == 2) {
+          borderColor = Colors.purple;
+        } else {
+          borderColor = Colors.red;
+        }
+
+        final iconColor = _getColorForAdvancedSet(exercise.advancedSetType);
+        final backgroundColor = Colors.white; // Set background to white
+
         displayWidgets.add(
-          SizedBox(
+          Container(
             width: MediaQuery.of(context).size.width * 0.9,
+            margin: EdgeInsets.only(left: exercise.isAdvancedSet ? 16.0 : 0.0),
             child: Card(
+              color: backgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: BorderSide(color: borderColor, width: 2.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -173,7 +201,7 @@ class WorkoutDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(exercise.name,
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                              style: const TextStyle(fontWeight: FontWeight.bold)),
                           Text('Category: ${exercise.categories.join(', ')}'),
                           Text('Equipment: ${exercise.equipment.join(', ')}'),
                           if (exercise.description != null)
@@ -182,33 +210,33 @@ class WorkoutDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Add icon with color based on advancedSetCount for ALL exercises in the set
-                    Icon(Icons.swap_horiz,
-                        color: _getColorForAdvancedSet(advancedSetCount)),
+                    // Show the icon for all exercises in the mini-circuit
+                    if (exercise.isAdvancedSet &&
+                        exercise.advancedSetType == 'mini-circuit')
+                      Icon(Icons.swap_horiz, color: iconColor),
                   ],
                 ),
               ),
             ),
           ),
         );
-
-        // If this is the last exercise in the advanced set, reset the counter
-        if (i == workout.length - 1 || !workout[i + 1].isAdvanced) {
-          advancedSetCount = 0;
-        }
       } else {
-        // Display other exercises using Card widgets with consistent width
+        // Display other exercises with a blue border
         displayWidgets.add(
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: const BorderSide(color: Colors.blue, width: 2.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(exercise.name,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     Text('Category: ${exercise.categories.join(', ')}'),
                     Text('Equipment: ${exercise.equipment.join(', ')}'),
                     if (exercise.description != null)
@@ -223,9 +251,8 @@ class WorkoutDetailsScreen extends StatelessWidget {
       }
     }
 
-    // Ensure we have enough lines for visual consistency,
-    // but only if there are fewer DISPLAYED exercises than the maximum
-    final maxExercises = 10;
+    // Ensure we have enough lines for visual consistency
+    const maxExercises = 10;
     if (displayWidgets.length < maxExercises) {
       while (displayWidgets.length < maxExercises) {
         displayWidgets.add(const SizedBox(height: 20));
@@ -235,17 +262,15 @@ class WorkoutDetailsScreen extends StatelessWidget {
     return displayWidgets;
   }
 
-  // Helper function to get color for advanced sets
-  Color _getColorForAdvancedSet(int count) {
-    switch (count % 3) {
-      case 0:
+// Helper function to get color for advanced sets
+  Color _getColorForAdvancedSet(String? advancedSetType) {
+    switch (advancedSetType) {
+      case 'superset':
         return Colors.blue;
-      case 1:
+      case 'mini-circuit':
         return Colors.green;
-      case 2:
-        return Colors.orange;
       default:
-        return Colors.black;
+        return Colors.black; // Or a default color for single exercises
     }
   }
 }
