@@ -4,17 +4,17 @@ import 'package:workout_generator/models/exercise.dart';
 
 // Define maps to associate goals with their advanced set probabilities
 const Map<String, double> goalSupersetProbabilities = {
-  'Strength': 0.15,
-  'Hypertrophy': 0.3,
-  'Endurance': 0.05,
-  'Metabolic': 0.2,
+  'Strength': 0.1,
+  'Hypertrophy': 0.2,
+  'Endurance': 0.15,
+  'Metabolic': 0.15,
 };
 
 const Map<String, double> goalMiniCircuitProbabilities = {
   'Strength': 0.05,
   'Hypertrophy': 0.1,
-  'Endurance': 0.0,
-  'Metabolic': 0.1,
+  'Endurance': 0.15,
+  'Metabolic': 0.2,
 };
 
 // Function to select exercises for a workout
@@ -156,10 +156,13 @@ List<Exercise> _selectExercisesForAdvancedSet(
 
       // Check for duplicate names even when variety is not enforced
       if (!usedExerciseNames.contains(candidateExercise.name)) {
-        candidateExercise.isAdvancedSet = true;
-        candidateExercise.advancedSetType = advancedSetType;
-        selectedExercises.add(candidateExercise);
+        final Exercise selectedExercise = candidateExercise.copyWith(
+          isAdvancedSet: true,
+          advancedSetType: advancedSetType,
+        );
+        selectedExercises.add(selectedExercise); // Add the copy
         usedExerciseNames.add(candidateExercise.name);
+
       }
     }
   }
