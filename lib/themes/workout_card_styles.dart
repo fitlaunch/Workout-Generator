@@ -5,6 +5,7 @@ class CardStyle {
   final Color borderColor;
   final double borderWidth;
 
+
   const CardStyle({
     required this.borderColor,
     required this.borderWidth,
@@ -17,7 +18,14 @@ const defaultCardStyle = CardStyle(
   borderWidth: 2.0,
 );
 
-const advancedCardStyles = [
+// const advancedCardStyle = CardStyle(
+// borderColor: Colors.green,
+// borderWidth: 2.0,
+// );
+
+
+
+const advancedCardStyle = [
   CardStyle(borderColor: Colors.green, borderWidth: 2.0),
   CardStyle(borderColor: Colors.purple, borderWidth: 2.0),
   CardStyle(borderColor: Colors.orange, borderWidth: 2.0),
@@ -25,3 +33,43 @@ const advancedCardStyles = [
   CardStyle(borderColor: Colors.redAccent, borderWidth: 2.0),
   CardStyle(borderColor: Colors.black54, borderWidth: 2.0),
 ];
+
+final BoxDecoration greenStyle = BoxDecoration(
+  color: Colors.green,
+  borderRadius: BorderRadius.circular(8),
+  boxShadow: [
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+  ],
+);
+
+final BoxDecoration blueStyle = BoxDecoration(
+  color: Colors.blue,
+  borderRadius: BorderRadius.circular(8),
+  boxShadow: [
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+  ],
+);
+
+final BoxDecoration orangeStyle = BoxDecoration(
+  color: Colors.orange,
+  borderRadius: BorderRadius.circular(8),
+  boxShadow: [
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+  ],
+);
+
+final BoxDecoration redStyle = BoxDecoration(
+  color: Colors.red,
+  borderRadius: BorderRadius.circular(8),
+  boxShadow: [
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+  ],
+);
+
+final BoxDecoration purpleStyle = BoxDecoration(
+  color: Colors.purple,
+  borderRadius: BorderRadius.circular(8),
+  boxShadow: [
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+  ],
+);

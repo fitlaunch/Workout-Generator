@@ -84,52 +84,92 @@ class WorkoutDetailsScreen extends StatelessWidget {
   }
 
 // Helper function to build the workout display
-  List<Widget> _buildWorkoutDisplay(
-      BuildContext context, List<Exercise> workout) {
+  List<Widget> _buildWorkoutDisplay(BuildContext context, List<Exercise> workout) {
     List<Widget> displayWidgets = [];
-    int advancedSetCount = 0;
-    bool isInAdvancedSet = false; // Add this flag
+    int i = 0;
+    int advancedSetIndex =0;
 
-    for (int i = 0; i < workout.length; i++) {
+    while (i < workout.length) {
       final exercise = workout[i];
 
       if (exercise.isAdvancedSet) {
-        if (!isInAdvancedSet) { // Check if entering a new advanced set
-          advancedSetCount++;
-          isInAdvancedSet = true;
+        // Determine the size of the advanced set based on its type
+        int advancedSetSize = (exercise.advancedSetType == 'mini-circuit') ? 3 : 2;
+        int endIndex = i + advancedSetSize;
+
+        // Check if there's enough space for the advanced set
+        if (endIndex <= workout.length) {
+          // Process the advanced set
+          displayWidgets.addAll(_buildAdvancedSet(
+            workout.sublist(i, endIndex),
+            _getStyleForAdvancedSet(advancedSetIndex),  // Provide unique styles for each advanced set
+
+            _getIconForAdvancedSetGroup(_getAdvancedSetGroup(advancedSetIndex)),  // Provide icons based on the group
+            _getAdvancedSetGroup(advancedSetIndex),  // Determine the group for advanced set
+          ));
+          i = endIndex;  // Move the index past the advanced set
+          advancedSetIndex++;  // Increment the advanced set index
+        } else {
+          // Not enough exercises left for a complete advanced set
+          print("Not enough exercises left for a complete advanced set.");
+          break;  // Exit the loop if not enough exercises are left
         }
-
-        final cardStyle = advancedCardStyles[advancedSetCount - 1];
-        final iconColor = _getColorForAdvancedSet(exercise.advancedSetType);
-
-        displayWidgets.add(ExerciseCard(
-          exercise: exercise,
-          cardStyle: cardStyle,
-          iconColor: iconColor,
-          isIndented: true,
-        ));
       } else {
-        isInAdvancedSet = false; // Reset the flag
-
+        // If not an advanced set, simply add the exercise
         displayWidgets.add(ExerciseCard(
           exercise: exercise,
           cardStyle: defaultCardStyle,
         ));
+        i++;
       }
     }
 
     return displayWidgets;
   }
 
-// Helper function to get color for advanced sets
-  Color _getColorForAdvancedSet(String? advancedSetType) {
-    switch (advancedSetType) {
-      case 'superset':
-        return Colors.green;
-      case 'mini-circuit':
-        return Colors.purple;
+// Helper function to build widgets for an advanced set
+  List<Widget> _buildAdvancedSet(
+      List<Exercise> advancedSetExercises,
+      CardStyle style,
+      Icon icon,
+      String advancedSetGroup) {
+    return advancedSetExercises.map((exercise) {
+      return ExerciseCard(
+        exercise: exercise,
+        cardStyle: style,
+        icon: icon,
+        isIndented: true,
+        advancedSetGroup: advancedSetGroup,
+      );
+    }).toList();
+  }
+
+// Functions for providing styles, icons, and groups
+  CardStyle _getStyleForAdvancedSet(int index) {
+    // Example logic for cycling styles
+    return advancedCardStyle[index % advancedCardStyle.length];
+  }
+
+  Icon _getIconForAdvancedSetGroup(String group) {
+    switch (group) {
+      case 'A':
+        return Icon(Icons.swap_horiz);
+      case 'B':
+        return Icon(Icons.swap_vert);
+      case 'C':
+        return Icon(Icons.repeat);
+      case 'D':
+        return Icon(Icons.swap_calls);
+      case 'E':
+        return Icon(Icons.cached);
       default:
-        return Colors.blue; // Or a default color for single exercises
+        return Icon(Icons.question_mark);
     }
+  }
+
+  String _getAdvancedSetGroup(int index) {
+    // Rotate groups based on index
+    const groups = ['A', 'B', 'C', 'D', 'E'];
+    return groups[index % groups.length];
   }
 }

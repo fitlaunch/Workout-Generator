@@ -4,17 +4,17 @@ import 'package:workout_generator/models/exercise.dart';
 
 // Define maps to associate goals with their advanced set probabilities
 const Map<String, double> goalSupersetProbabilities = {
-  'Strength': 0.1,
+  'Strength': 0.12,
   'Hypertrophy': 0.2,
   'Endurance': 0.15,
-  'Metabolic': 0.15,
+  'Metabolic': 0.20,
 };
 
 const Map<String, double> goalMiniCircuitProbabilities = {
   'Strength': 0.05,
   'Hypertrophy': 0.1,
   'Endurance': 0.15,
-  'Metabolic': 0.2,
+  'Metabolic': 0.20,
 };
 
 // Function to select exercises for a workout
@@ -118,20 +118,11 @@ List<Exercise> _selectExercisesForAdvancedSet(
     // Check if exercise name has already been used
     bool passesNameCheck = !usedExerciseNames.contains(candidateExercise.name);
 
-    bool passesVarietyCheck = !ensureVariety ||
-        !selectedExercises.any((e) => e.categories.any(
-                (category) => candidateExercise.categories.contains(category)));
+    // No need for category-based variety check
 
-    print('Candidate exercise: ${candidateExercise.name}, passesVarietyCheck: $passesVarietyCheck');
-    if (!passesVarietyCheck) {
-      print('Variety check failed. Reason: Categories overlap');
-    }
+    print('Candidate exercise: ${candidateExercise.name}, passesVarietyCheck: true'); // Always true
 
-    // if (passesNameCheck && passesVarietyCheck) {
-    //   candidateExercise.isAdvancedSet = true;
-    //   candidateExercise.advancedSetType = advancedSetType;
-    //   selectedExercises.add(candidateExercise);
-    if (passesNameCheck && passesVarietyCheck) {
+    if (passesNameCheck) { // Only check for name
       final Exercise selectedExercise = candidateExercise.copyWith(
         isAdvancedSet: true,
         advancedSetType: advancedSetType,
@@ -139,8 +130,6 @@ List<Exercise> _selectExercisesForAdvancedSet(
       selectedExercises.add(selectedExercise);
       usedExerciseNames.add(candidateExercise.name);
     }
-
-
 
     attempts++;
   }
