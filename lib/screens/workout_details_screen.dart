@@ -9,7 +9,7 @@ class WorkoutDetailsScreen extends StatelessWidget {
   final String selectedGoal;
   final String selectedDuration;
   final String selectedEquipment;
-  final int selectedDaysPerWeek;
+ // final int selectedDaysPerWeek;
   final List<Exercise> generatedWorkout;
 
   const WorkoutDetailsScreen({
@@ -17,13 +17,58 @@ class WorkoutDetailsScreen extends StatelessWidget {
     required this.selectedGoal,
     required this.selectedDuration,
     required this.selectedEquipment,
-    required this.selectedDaysPerWeek,
+    //required this.selectedDaysPerWeek,
     required this.generatedWorkout,
   });
 
+
+
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+  //  final w = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent,
+        onPressed: () {},
+        child: PopupMenuButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
+          color: Colors.blueAccent,
+          icon: Icon(
+            Icons.api_rounded,
+            color: Colors.white,
+            size: h * .04,
+          ),
+          position: PopupMenuPosition.over,
+          offset: const Offset(-42.0, -120.0), // Adjust vertical offset of FAB open),
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem(
+              child: ListTile(
+                leading: const Icon(
+                  Icons.fit_screen_rounded,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'Generate Random',
+                  style: TextStyle(fontSize: h * .025, color: Colors.white, fontWeight: FontWeight.bold,),
+                ),
+              ),
+            ),
+            PopupMenuItem(
+              child: ListTile(
+                leading: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'Account',
+                  style: TextStyle(fontSize: h * .025, color: Colors.white, fontWeight: FontWeight.bold,),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text('Workout Details'),
       ),
@@ -50,10 +95,10 @@ class WorkoutDetailsScreen extends StatelessWidget {
                 'Duration: $selectedDuration',
                 style: const TextStyle(fontSize: 16),
               ),
-              Text(
-                'Days per Week: $selectedDaysPerWeek',
-                style: const TextStyle(fontSize: 16),
-              ),
+              // Text(
+              //   'Days per Week: $selectedDaysPerWeek',
+              //   style: const TextStyle(fontSize: 16),
+              // ),
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
@@ -153,17 +198,17 @@ class WorkoutDetailsScreen extends StatelessWidget {
   Icon _getIconForAdvancedSetGroup(String group) {
     switch (group) {
       case 'A':
-        return Icon(Icons.swap_horiz);
+        return const Icon(Icons.swap_horiz);
       case 'B':
-        return Icon(Icons.swap_vert);
+        return const Icon(Icons.swap_vert);
       case 'C':
-        return Icon(Icons.repeat);
+        return const Icon(Icons.repeat);
       case 'D':
-        return Icon(Icons.swap_calls);
+        return const Icon(Icons.swap_calls);
       case 'E':
-        return Icon(Icons.cached);
+        return const Icon(Icons.cached);
       default:
-        return Icon(Icons.question_mark);
+        return const Icon(Icons.question_mark);
     }
   }
 
