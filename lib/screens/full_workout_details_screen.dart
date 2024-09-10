@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_constants.dart';
 import '../models/exercise.dart';
 import '../themes/workout_card_styles.dart';
 
@@ -131,7 +130,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Container(
-        width: 300,
+        width: 230,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,7 +197,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
             Text(exercise.description ?? ''),
             const SizedBox(height: 8),
             Text(
-              'Equipment: ${exercise.equipment ?? ''}',
+              'Equipment: ${exercise.equipment }',  //?? ''
               style: const TextStyle(fontStyle: FontStyle.italic),
             ),
           ],
