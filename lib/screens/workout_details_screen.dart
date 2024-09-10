@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../models/exercise.dart';
 import '../themes/exercise_card.dart';
 import '../themes/workout_card_styles.dart';
-import 'goal_selection_screen.dart';
+import 'build_workout/goal_selection_screen.dart';
+import 'full_workout_details_screen.dart';
 
 class WorkoutDetailsScreen extends StatelessWidget {
   final String selectedGoal;
@@ -21,50 +22,27 @@ class WorkoutDetailsScreen extends StatelessWidget {
     required this.generatedWorkout,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;
+   // final h = MediaQuery.of(context).size.height;
   //  final w = MediaQuery.of(context).size.width;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
-        onPressed: () {},
-        child: PopupMenuButton(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
-          color: Colors.blueAccent,
-          icon: Icon(
-            Icons.api_rounded,
-            color: Colors.white,
-            size: h * .04,
-          ),
-          position: PopupMenuPosition.over,
-          offset: const Offset(-42.0, -120.0), // Adjust vertical offset of FAB open),
-          itemBuilder: (BuildContext context) => [
-            PopupMenuItem(
-              child: ListTile(
-                leading: const Icon(
-                  Icons.fit_screen_rounded,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Generate Random',
-                  style: TextStyle(fontSize: h * .025, color: Colors.white, fontWeight: FontWeight.bold,),
-                ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FullWorkoutDetailsScreen(
+                generatedWorkout: generatedWorkout,
               ),
             ),
-            PopupMenuItem(
-              child: ListTile(
-                leading: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Account',
-                  style: TextStyle(fontSize: h * .025, color: Colors.white, fontWeight: FontWeight.bold,),
-                ),
-              ),
+          );
+        },
+        child: const Column(
+          children: [
+            Icon(Icons.start, color: Colors.white,),
+            Text('Start', style: TextStyle(color: Colors.white,),
             ),
           ],
         ),

@@ -18,4 +18,4 @@ const List<String> workoutDurations = [
 
 const List<int> daysPerWeekOptions = [2, 3, 4, 5, 6];
 
-const List<String> equipmentOptions = ['Home Gym', 'Pro Gym', 'BW'];
+const List<String> equipmentOptions = ['Home Gym', 'Pro Gym', 'Body Weight'];

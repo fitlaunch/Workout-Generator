@@ -41,7 +41,7 @@ List<Exercise> selectExercisesForWorkout(
     return isSettingMatch && isPositionMatch && isFinisherMatch;
   }).toList();
 
-  print('Filtered exercises count: ${filteredExercises.length}');
+ // print('Filtered exercises count: ${filteredExercises.length}');
 
   final supersetProbability = goalSupersetProbabilities[selectedGoal] ?? 0.2;
   final miniCircuitProbability = goalMiniCircuitProbabilities[selectedGoal] ?? 0.1;
@@ -54,11 +54,11 @@ List<Exercise> selectExercisesForWorkout(
           !generatedWorkout.any((e) => e.name == exercise.name);
     }).toList();
 
-    print('Selecting exercise for position: $position');
-    print('Eligible exercises: ${eligibleExercises.map((e) => e.name).toList()}');
+   // print('Selecting exercise for position: $position');
+   // print('Eligible exercises: ${eligibleExercises.map((e) => e.name).toList()}');
 
     if (eligibleExercises.isEmpty) {
-      print('No suitable exercises found for position: $position');
+    //  print('No suitable exercises found for position: $position');
       continue;
     }
 

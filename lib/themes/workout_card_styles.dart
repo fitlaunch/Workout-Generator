@@ -38,7 +38,7 @@ final BoxDecoration greenStyle = BoxDecoration(
   color: Colors.green,
   borderRadius: BorderRadius.circular(8),
   boxShadow: [
-    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2)),
   ],
 );
 
@@ -46,7 +46,7 @@ final BoxDecoration blueStyle = BoxDecoration(
   color: Colors.blue,
   borderRadius: BorderRadius.circular(8),
   boxShadow: [
-    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2)),
   ],
 );
 
@@ -54,7 +54,7 @@ final BoxDecoration orangeStyle = BoxDecoration(
   color: Colors.orange,
   borderRadius: BorderRadius.circular(8),
   boxShadow: [
-    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2)),
   ],
 );
 
@@ -62,7 +62,7 @@ final BoxDecoration redStyle = BoxDecoration(
   color: Colors.red,
   borderRadius: BorderRadius.circular(8),
   boxShadow: [
-    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2)),
   ],
 );
 
@@ -70,6 +70,6 @@ final BoxDecoration purpleStyle = BoxDecoration(
   color: Colors.purple,
   borderRadius: BorderRadius.circular(8),
   boxShadow: [
-    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2)),
   ],
 );
