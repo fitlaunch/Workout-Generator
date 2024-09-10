@@ -9,6 +9,7 @@ class CardStyle {
   const CardStyle({
     required this.borderColor,
     required this.borderWidth,
+
   });
 }
 
@@ -16,11 +17,13 @@ class CardStyle {
 const defaultCardStyle = CardStyle(
   borderColor: Colors.blue,
   borderWidth: 2.0,
+
 );
 
 // const advancedCardStyle = CardStyle(
 // borderColor: Colors.green,
 // borderWidth: 2.0,
+// cardColor: Colors.lightPurpleAccent
 // );
 
 
@@ -32,6 +35,15 @@ const advancedCardStyle = [
   CardStyle(borderColor: Colors.blueGrey, borderWidth: 2.0),
   CardStyle(borderColor: Colors.redAccent, borderWidth: 2.0),
   CardStyle(borderColor: Colors.black54, borderWidth: 2.0),
+];
+
+final lighterColors = [
+  Colors.lightGreen.shade100,
+  Colors.purple.shade100,
+  Colors.orange.shade100,
+  Colors.blueGrey.shade100,
+  Colors.redAccent.shade100,
+  Colors.grey.shade200, // Example lighter colors
 ];
 
 final BoxDecoration greenStyle = BoxDecoration(
