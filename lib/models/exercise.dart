@@ -11,6 +11,8 @@ class Exercise {
   final List<String> position; // where in workout ex may fit
   bool isAdvanced = false; //when false, may be used as ss, cs, mini
   bool finisherOnly = false;
+  bool isAdvancedSet = false; // Add this property
+  String? advancedSetType; // Add this property
 
   // We'll handle sets and reps later, likely in the workout generation logic
 
@@ -25,6 +27,8 @@ class Exercise {
     required this.position,
     this.isAdvanced = false,
     this.finisherOnly = false,
+    this.isAdvancedSet = false,
+    this.advancedSetType
   });
 
   Exercise copyWith({
@@ -38,6 +42,9 @@ class Exercise {
     String? image,
     bool? finisherOnly,
     bool? isAdvanced,
+    bool? isAdvancedSet,
+    String? advancedSetType
+
   }) {
     return Exercise(
       name: name ?? this.name,
@@ -50,6 +57,8 @@ class Exercise {
       image: image ?? this.image,
       finisherOnly: finisherOnly ?? this.finisherOnly,
       isAdvanced: isAdvanced ?? this.isAdvanced,
+      isAdvancedSet: isAdvancedSet ?? this.isAdvancedSet,
+      advancedSetType: advancedSetType ?? this.advancedSetType
     );
   }
 }

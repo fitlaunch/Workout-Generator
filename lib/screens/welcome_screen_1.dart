@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_generator/screens/welcome_screen_2.dart';
 
-import 'goal_selection_screen.dart';
+import 'build_workout/goal_selection_screen.dart';
 
 class WelcomeScreen1 extends StatelessWidget {
   const WelcomeScreen1({super.key});

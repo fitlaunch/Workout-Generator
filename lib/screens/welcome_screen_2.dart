@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'goal_selection_screen.dart';
+import 'build_workout/goal_selection_screen.dart';
 
 class WelcomeScreen2 extends StatelessWidget {
   const WelcomeScreen2({super.key});
