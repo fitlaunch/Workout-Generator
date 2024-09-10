@@ -164,8 +164,9 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
               ],
             ),
             const SizedBox(height: 8),
-            // Text('Sets: ${exercise.set}'),
-            // Text('Reps: ${exercise.rep}'),
+            Text('Sets: ${exercise.sets}'),
+            Text('Reps: ${exercise.reps}'),
+            Text('Rest: ${exercise.rest}'),
             const SizedBox(height: 8),
             SizedBox(
               width: double.infinity,

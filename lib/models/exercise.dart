@@ -6,6 +6,9 @@ class Exercise {
       settings; // exercise equipment setting ie home gym bodyweight
   final List<String> equipment; //bar, band, bodyweight etc
   final String? description; // Optional description
+  String sets;
+  String reps;
+  String rest;
   final String? videoLink; // Optional video link
   final String? image; // Optional image
   final List<String> position; // where in workout ex may fit
@@ -22,6 +25,9 @@ class Exercise {
     required this.settings,
     required this.equipment,
     this.description,
+    this.sets = '',
+    this.reps = '',
+    this.rest = '',
     this.videoLink,
     this.image,
     required this.position,
@@ -53,6 +59,7 @@ class Exercise {
       equipment: equipment ?? this.equipment,
       position: position ?? this.position,
       description: description ?? this.description,
+
       videoLink: videoLink ?? this.videoLink,
       image: image ?? this.image,
       finisherOnly: finisherOnly ?? this.finisherOnly,
