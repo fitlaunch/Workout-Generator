@@ -8,6 +8,7 @@ List<Exercise> generateWorkout(
     String selectedEquipment, {
       required String selectedGoal,
       required String selectedDuration,
+      required String? selectedWorkoutStyle,
     }) {
   final template =
   getTemplateByKey(selectedEquipment, selectedGoal, selectedDuration);
@@ -18,6 +19,7 @@ List<Exercise> generateWorkout(
     template,
     selectedEquipment,
     selectedGoal,
+    selectedWorkoutStyle!,
   );
 
   // Add sets, reps, and rest based on goal and handle advanced set rest

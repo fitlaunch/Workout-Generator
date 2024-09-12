@@ -12,6 +12,7 @@ class WorkoutDetailsScreen extends StatelessWidget {
   final String selectedEquipment;
  // final int selectedDaysPerWeek;
   final List<Exercise> generatedWorkout;
+  final String selectedWorkoutStyle;
 
   const WorkoutDetailsScreen({
     super.key,
@@ -20,6 +21,7 @@ class WorkoutDetailsScreen extends StatelessWidget {
     required this.selectedEquipment,
     //required this.selectedDaysPerWeek,
     required this.generatedWorkout,
+    required this.selectedWorkoutStyle,
   });
 
   @override
@@ -61,6 +63,10 @@ class WorkoutDetailsScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
+              Text(
+                'Workout Style: $selectedWorkoutStyle',
+                style: const TextStyle(fontSize: 16),
+              ),
               Text(
                 'Goal: $selectedGoal',
                 style: const TextStyle(fontSize: 16),

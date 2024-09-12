@@ -23,6 +23,7 @@ List<Exercise> selectExercisesForWorkout(
     List<String> template,
     String selectedEquipment,
     String selectedGoal,
+    String selectedWorkoutStyle,
     ) {
   final List<Exercise> generatedWorkout = [];
   final Random random = Random();
@@ -38,7 +39,9 @@ List<Exercise> selectExercisesForWorkout(
     bool isFinisherMatch =
     (!exercise.finisherOnly || template.contains('Finisher'));
 
-    return isSettingMatch && isPositionMatch && isFinisherMatch;
+    bool isWorkoutStyleMatch = exercise.categories.contains(selectedWorkoutStyle);
+
+    return isSettingMatch && isPositionMatch && isFinisherMatch && isWorkoutStyleMatch;
   }).toList();
 
  // print('Filtered exercises count: ${filteredExercises.length}');

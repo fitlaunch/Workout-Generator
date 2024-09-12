@@ -219,7 +219,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
         LinearProgressIndicator(
           value: progress,
           backgroundColor: Colors.grey[300],
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+          valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
           minHeight: 10,
         ),
         Text('$percentage%',

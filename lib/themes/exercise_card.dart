@@ -10,14 +10,14 @@ class ExerciseCard extends StatelessWidget {
   final String? advancedSetGroup;
   final Icon? icon;
 
-  const ExerciseCard({
+  const ExerciseCard({super.key,
     required this.exercise,
     required this.cardStyle,
     this.icon,
     //  this.iconColor,
     this.advancedSetGroup,
     this.isIndented = false,
-  }) : super();
+  });
 
   @override
   Widget build(BuildContext context) {
