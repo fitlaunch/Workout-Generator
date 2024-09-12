@@ -13,10 +13,11 @@ class GoalSelectionScreen extends StatefulWidget {
 }
 
 class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
-  String _selectedGoal = 'Strength'; // Default selection
+  String _selectedGoal = 'Hypertrophy'; // Default selection
   String _selectedEquipment = 'Home Gym'; // Default selection
-  String _selectedDuration = workoutDurations[0];
+  String _selectedDuration = workoutDurations[1];
   final _scrollController = ScrollController();
+  String _selectedWorkoutStyle = workoutStyle[0];  //selecting workout type
   // int _selectedDaysPerWeek = daysPerWeekOptions[1]; // Add this back when needed
 
   @override
@@ -47,6 +48,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
             _selectedEquipment,
             selectedGoal: _selectedGoal,
             selectedDuration: _selectedDuration,
+            selectedWorkoutStyle: _selectedWorkoutStyle
           );
           print('Generated workout: $workout');
 
@@ -58,6 +60,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
                 selectedGoal: _selectedGoal,
                 selectedDuration: _selectedDuration,
                 selectedEquipment: _selectedEquipment,
+                selectedWorkoutStyle: _selectedWorkoutStyle,
                 // selectedDaysPerWeek: _selectedDaysPerWeek, // Add this back when needed
                 generatedWorkout: workout, // Pass the generated workout
               ),
@@ -171,6 +174,99 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 20),
+                  // Target Selection with RadioButtons
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Container(
+                      height: 140, // Increased height for two rows
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.deepOrange.shade300, width: 2),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Select Workout Style:',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          const SizedBox(height: 10),
+                          Expanded(
+                            child: GridView.count(
+                              crossAxisCount: 3,
+                              childAspectRatio: 2.5,
+                              //mainAxisSpacing: 1, // Add vertical spacing between rows
+                              crossAxisSpacing: 4,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: workoutStyle.map((style) {
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedWorkoutStyle = style;
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min, // Prevent Row from taking full width
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: Radio<String>(
+                                          value: style,
+                                          groupValue: _selectedWorkoutStyle,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedWorkoutStyle = value!;
+                                            });
+                                          },
+                                          activeColor: Colors.deepOrange,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      ShaderMask( // Added ShaderMask
+                                        shaderCallback: (bounds) => RadialGradient(
+                                          center: Alignment.center,
+                                          radius: 3.5,
+                                          colors: _selectedWorkoutStyle == style
+                                              ? [Colors.white, Colors.blueAccent.withOpacity(0.2)]
+                                              : [Colors.white, Colors.white70],
+                                          stops: const [0.8, 1.0],
+                                        ).createShader(bounds),
+                                        child: Text(
+                                          style,
+                                          style: TextStyle(
+                                            fontSize: _selectedWorkoutStyle == style
+                                                ? 15 : 14,
+                                            color: _selectedWorkoutStyle == style
+                                                ? Colors.blueAccent[100]
+                                                : Colors.white70,
+                                            fontWeight: _selectedWorkoutStyle == style
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
                   // Goal Selection with SegmentedButton
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -429,39 +525,39 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
                   // ),
                   const SizedBox(height: 30),
                   //THE GENERATE BUTTON
-                  ElevatedButton(
-                    onPressed: () {
-                      // Generate the workout
-                      final workout = generateWorkout(
-                        _selectedEquipment,
-                        selectedGoal: _selectedGoal,
-                        selectedDuration: _selectedDuration,
-                      );
-                      print('Generated workout: $workout');
-
-                      // Navigate to WorkoutDetailsScreen and pass the workout data
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WorkoutDetailsScreen(
-                            selectedGoal: _selectedGoal,
-                            selectedDuration: _selectedDuration,
-                            selectedEquipment: _selectedEquipment,
-                            // selectedDaysPerWeek: _selectedDaysPerWeek, // Add this back when needed
-                            generatedWorkout:
-                                workout, // Pass the generated workout
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Generate My Workout',
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     // Generate the workout
+                  //     final workout = generateWorkout(
+                  //       _selectedEquipment,
+                  //       selectedGoal: _selectedGoal,
+                  //       selectedDuration: _selectedDuration,
+                  //     );
+                  //     print('Generated workout: $workout');
+                  //
+                  //     // Navigate to WorkoutDetailsScreen and pass the workout data
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => WorkoutDetailsScreen(
+                  //           selectedGoal: _selectedGoal,
+                  //           selectedDuration: _selectedDuration,
+                  //           selectedEquipment: _selectedEquipment,
+                  //           // selectedDaysPerWeek: _selectedDaysPerWeek, // Add this back when needed
+                  //           generatedWorkout:
+                  //               workout, // Pass the generated workout
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: const Text(
+                  //     'Generate My Workout',
+                  //     style: TextStyle(
+                  //       color: Colors.blueAccent,
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

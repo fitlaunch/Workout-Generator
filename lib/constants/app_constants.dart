@@ -1,4 +1,11 @@
 // app_constants.dart
+const List<String> workoutStyle = [
+  'Full Body',
+  'Upper Body',
+  'Lower Body',
+  'Anterior',
+  'Posterior',
+];
 
 const List<String> workoutGoals = [
   'Strength',

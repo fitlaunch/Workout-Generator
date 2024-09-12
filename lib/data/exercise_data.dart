@@ -1,10 +1,10 @@
 import '../models/exercise.dart';
 
 final List<Exercise> exercises = [
-  // Upper Push
+  // Upper Body Push
   Exercise(
     name: 'Pull-Ups',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Pull-Up Bar'],
     description:
@@ -14,7 +14,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Incline Dumbbell Press',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells', 'Bench'],
     description: 'Targets the upper chest and shoulders.',
@@ -23,7 +23,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Front Squat',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Barbell', 'Dumbbell'],
     description: 'A squat variation that emphasizes the quads and core.',
@@ -32,7 +32,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Glute Bridge',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Plate or bar weighted unless part of a superset.'],
     description:
@@ -52,7 +52,7 @@ final List<Exercise> exercises = [
   // New No Equipment Bodyweight Exercises
   Exercise(
     name: 'Bodyweight Squats',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['BW'],
     equipment: [],
     description:
@@ -62,7 +62,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Lunges',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['BW'],
     equipment: [],
     description:
@@ -104,7 +104,7 @@ final List<Exercise> exercises = [
   // Additional exercises with updated isAdvanced values
   Exercise(
     name: 'Overhead Tricep Extensions',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbell'],
     description: 'Isolation exercise focusing on the triceps.',
@@ -113,7 +113,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Barbell Bicep Curls',
-    categories: ['Upper', 'Pull', 'Anterior'],
+    categories: ['Upper Body', 'Pull', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Barbell'],
     description: 'Compound exercise primarily targeting the biceps.',
@@ -122,7 +122,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Cable Pulldowns',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Cable Machine'],
     description:
@@ -132,7 +132,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Leg Press',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Leg Press Machine'],
     description:
@@ -142,7 +142,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Hamstring Curls',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Leg Curl Machine'],
     description: 'Isolation exercise focusing on the hamstrings.',
@@ -150,9 +150,9 @@ final List<Exercise> exercises = [
     isAdvanced: true,
   ),
   Exercise(
-    name: 'Plank',
+    name: 'Front Plank',
     categories: ['Full Body', 'Anterior'],
-    settings: ['BW'],
+    settings: ['BW', 'Home Gym'],
     equipment: [],
     description:
         'A static exercise that strengthens the core and improves stability.',
@@ -162,7 +162,7 @@ final List<Exercise> exercises = [
   Exercise(
     name: 'Side Plank',
     categories: ['Full Body', 'Anterior'],
-    settings: ['BW'],
+    settings: ['BW', 'Home Gym'],
     equipment: [],
     description:
         'Challenges the obliques and core for improved balance and stability.',
@@ -171,7 +171,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Dumbbell Shoulder Press',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells'],
     description: 'Compound exercise targeting the shoulders (deltoids).',
@@ -180,7 +180,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Seated Cable Rows',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Cable Machine'],
     description: 'Effective exercise for strengthening the back muscles.',
@@ -189,7 +189,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Leg Extensions',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Leg Extension Machine'],
     description: 'Isolation exercise focusing on the quadriceps.',
@@ -198,10 +198,10 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Calf Raises',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Posterior'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells (optional)'],
-    description: 'Strengthens the calf muscles.',
+    description: 'Strengthens the calf muscles. Generally feet directly forward but may point in or out 10 degrees to target a specific head of the calf.',
     position: ['Secondary', 'Finisher'],
     isAdvanced: true,
   ),
@@ -216,7 +216,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Barbell Hip Thrust',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Barbell', 'Bench'],
     description: 'A powerful exercise for building glute strength and power.',
@@ -225,7 +225,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Dumbbell Lateral Raise',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells'],
     description:
@@ -235,7 +235,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Chin-Ups',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['BW', 'Pro Gym'],
     equipment: ['Chin-Up Bar'],
     description:
@@ -245,7 +245,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Hack Squat',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Hack Squat Machine'],
     description:
@@ -255,7 +255,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Single-Leg Romanian Deadlift',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells (optional)'],
     description:
@@ -265,7 +265,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Decline Push-Ups',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['BW'],
     equipment: [],
     description:
@@ -275,7 +275,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Dumbbell Pullover',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbell', 'Bench'],
     description: 'Works the lats, chest, and triceps.',
@@ -284,7 +284,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Leg Press Calf Raise',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Leg Press Machine'],
     description: 'Strengthens the calf muscles using the leg press machine.',
@@ -293,7 +293,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Single-Leg Deadlifts',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells (optional)'],
     description:
@@ -313,7 +313,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Dumbbell Bench Press',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells', 'Bench'],
     description: 'A versatile compound exercise for chest development.',
@@ -322,7 +322,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Close-Grip Lat Pulldown',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Cable Machine'],
     description:
@@ -332,7 +332,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Barbell Front Squat',
-    categories: ['Lower', 'Squat', 'Anterior'],
+    categories: ['Lower Body', 'Squat', 'Anterior'],
     settings: ['Pro Gym'],
     equipment: ['Barbell'],
     description: 'A squat variation that emphasizes the quads and core.',
@@ -341,7 +341,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Barbell Hip Thrust',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['Pro Gym'],
     equipment: ['Barbell', 'Bench'],
     description: 'Builds glute strength and power.',
@@ -350,7 +350,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Overhead Press',
-    categories: ['Upper', 'Push', 'Anterior'],
+    categories: ['Upper Body', 'Push', 'Anterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells', 'Barbell'],
     description: 'Builds shoulder strength and stability.',
@@ -359,7 +359,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Dumbbell Incline Row',
-    categories: ['Upper', 'Pull', 'Posterior'],
+    categories: ['Upper Body', 'Pull', 'Posterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Dumbbells', 'Bench'],
     description: 'An effective exercise for targeting the upper back muscles.',
@@ -368,7 +368,7 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Romanian Deadlift (RDL)',
-    categories: ['Lower', 'Hinge', 'Posterior'],
+    categories: ['Lower Body', 'Hinge', 'Posterior'],
     settings: ['Home Gym', 'Pro Gym'],
     equipment: ['Barbell', 'Dumbbells'],
     description:
@@ -378,13 +378,13 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Box Jumps',
-    categories: ['Lower', 'Plyometrics'],
+    categories: ['Lower Body', 'Plyo'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Box'],
     description:
         'A plyometric exercise that develops explosive power and improves vertical jump.',
-    position: ['Finisher'],
-    isAdvanced: false, // Explosive exercise, not suitable for advanced sets
+    position: ['Secondary', 'Primary'],
+    isAdvanced: true,
   ),
   Exercise(
     name: 'Renegade Row',
@@ -398,11 +398,11 @@ final List<Exercise> exercises = [
   ),
   Exercise(
     name: 'Jump Rope',
-    categories: ['Cardio'],
+    categories: ['Cardio', 'Full Body'],
     settings: ['BW', 'Home Gym', 'Pro Gym'],
     equipment: ['Jump Rope'],
     description:
-        'A cardiovascular exercise that improves coordination and agility.',
+        'A cardiovascular exercise that improves coordination and explosiveness and in higher reps a great cardio enhancer.',
     position: ['Warm-up', 'Finisher'],
     isAdvanced: false,
   ),
