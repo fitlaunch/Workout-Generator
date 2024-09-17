@@ -57,6 +57,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
     int i = 0;
     int advancedSetIndex = 0;
 
+
     while (i < workout.length) {
       final exercise = workout[i];
 
@@ -130,7 +131,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Container(
-        width: 230,
+        width: MediaQuery.of(context).size.width*.70,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +167,7 @@ class _FullWorkoutDetailsScreenState extends State<FullWorkoutDetailsScreen> {
             Text('Sets: ${exercise.sets}'),
             Text('Reps: ${exercise.reps}'),
             Text('Rest: ${exercise.rest}'),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
